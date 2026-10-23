@@ -36,30 +36,77 @@ def get_rental_discount(days: int, contractor: bool = False) -> float:
             return MIDDLE_DISCOUNT
         elif days >= MORE_DAYS:
             return HIGH_DISCOUNT
-    else:
-        return "Error1"
 
 
 def calculate_quote(daily_rate: float, days: int, contractor: bool = False) -> float:
     """Returns quote after discount and damage waiver"""
-    if calculate_rental_cost * (1 - get_rental_discount) > DAMAGE_WAIVER_REQ:
-        return calculate_rental_cost * (1 - get_rental_discount)
-    elif calculate_rental_cost * (1 - get_rental_discount) <= DAMAGE_WAIVER_REQ:
-        return calculate_rental_cost * (1 - get_rental_discount) + DAMAGE_WAIVER_ADD
-    else:
-        return "Error2"
+    if (
+        calculate_rental_cost(daily_rate, days)
+        * (1 - get_rental_discount(days, contractor))
+        > DAMAGE_WAIVER_REQ
+    ):
+        return calculate_rental_cost(daily_rate, days) * (
+            1 - get_rental_discount(days, contractor)
+        )
+    elif (
+        calculate_rental_cost(daily_rate, days)
+        * (1 - get_rental_discount(days, contractor))
+        <= DAMAGE_WAIVER_REQ
+    ):
+        return (
+            calculate_rental_cost(daily_rate, days)
+            * (1 - get_rental_discount(days, contractor))
+            + DAMAGE_WAIVER_ADD
+        )
 
 
 def requires_deposit(quote: float) -> bool:
+    """Returns true or false if requires deposit"""
     return quote >= DEPOSIT
 
 
 def needs_inspection(days: int, quote: float) -> bool:
+    """Returns true or false if needs inspection"""
     return quote >= INSPECTION_QUOTE and days >= INSPECTION_DAYS
 
 
-# def total_quoted(rentals: list) -> float:
+def total_quoted(rentals: list) -> float:
+    """Returns the total by adding each quote together"""
+    total = 0
+    for rental in rentals:
+        total += calculate_quote(
+            rental["daily_rate"], rental["days"], rental["contractor"]
+        )
+    return total
 
-# def largest_rental(rentals: list) -> str:
 
-# def format_rental_line(customer: str, quote: float, deposit: bool, inspection: bool) -> str:
+def largest_rental(rentals: list) -> str:
+    """Returns the largest quote and keeps the first largest"""
+    largest = ""
+    current_max = 0
+    for rental in rentals:
+        if (
+            calculate_quote(rental["daily_rate"], rental["days"], rental["contractor"])
+            > current_max
+        ):
+            current_max = calculate_quote(
+                rental["daily_rate"], rental["days"], rental["contractor"]
+            )
+            largest = rental["customer"]
+    return largest
+
+
+def format_rental_line(
+    customer: str, quote: float, deposit: bool, inspection: bool
+) -> str:
+    """Returns the customer, quote, deposit, and inspection in one line."""
+    if deposit is True:
+        deposit_string = "yes"
+    else:
+        deposit_string = "no"
+    if inspection is True:
+        inspection_string = "yes"
+    else:
+        inspection_string = "no"
+
+    return f"{customer}: ${quote:.2f} | deposit: {deposit_string} | inspection: {inspection_string}"

@@ -1,12 +1,10 @@
 from business_rules import (
-    calculate_rental_cost,
-    get_rental_discount,
     calculate_quote,
-    requires_deposit,
-    needs_inspection,
-    total_quoted,
-    largest_rental,
     format_rental_line,
+    largest_rental,
+    needs_inspection,
+    requires_deposit,
+    total_quoted,
 )
 
 rentals = [
@@ -21,3 +19,23 @@ rentals = [
 ]
 
 print("Ridgeline Tool Rental - Rental Report")
+rental_count = 0
+deposit_count = 0
+inspection_count = 0
+for rental in rentals:
+    quote = calculate_quote(rental["daily_rate"], rental["days"], rental["contractor"])
+    deposit = requires_deposit(quote)
+    inspection = needs_inspection(rental["days"], quote)
+    print(format_rental_line(rental["customer"], quote, deposit, inspection))
+    rental_count += 1
+    if deposit is True:
+        deposit_count += 1
+    if inspection is True:
+        inspection_count += 1
+
+print(f"Rentals: {rental_count}")
+print(f"Total quoted: ${total_quoted(rentals):.2f}")
+print(f"Average quote: ${total_quoted(rentals) / rental_count:.2f}")
+print(f"Largest quote: {largest_rental(rentals)}")
+print(f"Deposits required: {deposit_count}")
+print(f"Inspections required: {inspection_count}")
