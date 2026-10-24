@@ -102,5 +102,18 @@ commands.md
 ```
 The main.py file prints, and business_rules.py is not included, since it runs the logic and not the printing.
 ## 6. The commit history
-
-
+```
+git log --oneline
+```
+```
+563beb0 (HEAD -> main, origin/main) midterm: Worked on the README.md file
+9aa420f midterm: fixed calculate_quote in business_rules.py
+a3556d1 midterm: added the second half of the tests
+3cbaa17 midterm: created half of the tests required
+237ff80 midterm: finished business_rules.py and part of main.py
+537184b midterm: added rentals to main.py
+32de6b2 midterm: first 5 functions of business_rules.py
+2d6b615 midterm: first 2 functions of business_rules.py
+ab7dc66 midterm: folder file setup
+```
+There are nine commits currently.

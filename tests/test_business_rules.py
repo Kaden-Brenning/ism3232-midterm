@@ -56,8 +56,12 @@ def test_waiver_not_applied_above_limit():
     assert calculate_quote(150.00, 1, contractor=False) == 150.00
 
 
-def test_discount_applied_correctly():
+def test_discount_contractor_applied_correctly():
     assert calculate_quote(200, 2, contractor=True) == 360.00
+
+
+def test_discount_applied_correctly():
+    assert calculate_quote(200, 2, contractor=False) == 400.00
 
 
 def test_deposit_is_required():
