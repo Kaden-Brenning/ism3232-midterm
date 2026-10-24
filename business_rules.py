@@ -43,15 +43,15 @@ def calculate_quote(daily_rate: float, days: int, contractor: bool = False) -> f
     if (
         calculate_rental_cost(daily_rate, days)
         * (1 - get_rental_discount(days, contractor))
-        > DAMAGE_WAIVER_REQ
+        >= DAMAGE_WAIVER_REQ
     ):
         return calculate_rental_cost(daily_rate, days) * (
             1 - get_rental_discount(days, contractor)
         )
-    elif (
+    if (
         calculate_rental_cost(daily_rate, days)
         * (1 - get_rental_discount(days, contractor))
-        <= DAMAGE_WAIVER_REQ
+        < DAMAGE_WAIVER_REQ
     ):
         return (
             calculate_rental_cost(daily_rate, days)
@@ -67,7 +67,7 @@ def requires_deposit(quote: float) -> bool:
 
 def needs_inspection(days: int, quote: float) -> bool:
     """Returns true or false if needs inspection"""
-    return quote >= INSPECTION_QUOTE and days >= INSPECTION_DAYS
+    return quote > INSPECTION_QUOTE and days >= INSPECTION_DAYS
 
 
 def total_quoted(rentals: list) -> float:
