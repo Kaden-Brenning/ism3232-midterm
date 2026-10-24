@@ -16,23 +16,23 @@ This program includes calculations for the tool rentals provided by Ridgeline To
 6. When the number of days is 5 or greater, and the quote is greater than 800 dollars, an inspection is required.
 
 ## How to Run
-'''
+```
 python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && python3 main.py
-'''
+```
 ## How to Test
-'''
+```
 ruff format . && ruff check . && pytest -v
-'''
+```
 Contains 25 Tests.
 ## Files in This Repository
-tests/test_business_rules.py is for the 25 tests that ensure that any edge cases would work correctly.
-tests/__init__.py is for initial Github setup.
-.gitignore is for excluding the files that should not be commited to Github.
-README.md is for explaining to a user what the program does and how to use it.
-business_rules.py is for the 8 logical rules that calculate the input rentals.
-commands.md is for showing a user what was required to build this project.
-main.py is for printing the summary output.
-requirements.txt is for allowing the correct versions to be installed by the user.
+1. tests/test_business_rules.py is for the 25 tests that ensure that any edge cases would work correctly.
+2. tests/__init__.py is for initial Github setup.
+3. .gitignore is for excluding the files that should not be commited to Github.
+4. README.md is for explaining to a user what the program does and how to use it.
+5. business_rules.py is for the 8 logical rules that calculate the input rentals.
+6. commands.md is for showing a user what was required to build this project.
+7. main.py is for printing the summary output.
+8. requirements.txt is for allowing the correct versions to be installed by the user.
 
 ## AI Use Statement
 I did not use AI on this exam.
